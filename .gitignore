@@ -39,3 +39,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Licensed fonts: not redistributable, add locally (see README)
+assets/fonts/
