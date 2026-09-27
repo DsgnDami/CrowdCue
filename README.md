@@ -14,6 +14,7 @@ The font files aren't committed because their licences don't allow
 redistribution. Copy these into `assets/fonts/` before running the app:
 
 - `Behind-The-Nineties-Rg.otf`
+- `SF-Pro-Rounded-Regular.otf`
 - `SF-Pro-Rounded-Medium.otf`
 - `SF-Pro-Rounded-Semibold.otf`
 

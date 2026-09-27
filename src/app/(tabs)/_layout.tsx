@@ -7,7 +7,7 @@ import { TabBarButton } from '@/components/tab-bar-button';
 export default function TabsLayout() {
   return (
     <Tabs>
-      <TabSlot />
+      <TabSlot style={styles.slot} />
       <TabList style={styles.tabBar}>
         <TabTrigger name="home" href="/home" asChild>
           <TabBarButton
@@ -32,6 +32,12 @@ export default function TabsLayout() {
 }
 
 const styles = StyleSheet.create({
+  // TabSlot's container defaults to flexShrink: 0, which lets a tall screen
+  // grow past the window on web instead of scrolling inside it.
+  slot: {
+    flexShrink: 1,
+    minHeight: 0,
+  },
   // 351pt wide as in Figma; the three 88pt buttons + 40pt gaps overflow it
   // by 5pt in the design too, which is what places the last icon.
   tabBar: {

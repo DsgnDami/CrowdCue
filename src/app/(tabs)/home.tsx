@@ -6,8 +6,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PrimaryButton } from '@/components/button';
 import { GlassCard } from '@/components/glass-card';
 import { BellIcon, ImageIcon } from '@/components/icons';
+import { LiveSession } from '@/components/live/live-session';
 import { SvgAsset } from '@/components/svg-asset';
 import { colors, fonts } from '@/constants/theme';
+import { useSession } from '@/context/session';
 
 // TODO: replace with the signed-in DJ's profile once auth exists.
 const DJ_NAME = 'DJ Propane';
@@ -19,8 +21,15 @@ function greeting(date = new Date()) {
   return 'Good evening';
 }
 
-// Figma frame: "iPhone 16 - 10" (node 157:1540), 393×852.
+// Home tab: the live session dashboard while live, otherwise the
+// "Ready to go live?" screen (Figma node 157:1540).
 export default function Home() {
+  const { session } = useSession();
+  if (session) return <LiveSession session={session} />;
+  return <ReadyToGoLive />;
+}
+
+function ReadyToGoLive() {
   const insets = useSafeAreaInsets();
 
   const handleStartSession = () => router.push('/new-session');

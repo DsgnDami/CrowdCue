@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
-import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
 import { SvgAsset } from '@/components/svg-asset';
+import { Vignette } from '@/components/vignette';
 import { colors } from '@/constants/theme';
 
 // Figma frame: "iPhone 16 - 5" (node 135:267), 393×852.
@@ -33,18 +33,7 @@ export function SplashScreen({ onPress }: Props) {
             contentFit="fill"
             contentPosition="bottom"
           />
-          {/* Radial vignette fading the photo into the background. */}
-          <Svg style={StyleSheet.absoluteFill} width="100%" height="100%">
-            <Defs>
-              <RadialGradient id="vignette" cx="50%" cy="50%" r="50%">
-                <Stop offset="0" stopColor={colors.background} stopOpacity={0} />
-                <Stop offset="0.55" stopColor={colors.background} stopOpacity={0} />
-                <Stop offset="0.85" stopColor={colors.background} stopOpacity={0.7} />
-                <Stop offset="1" stopColor={colors.background} stopOpacity={1} />
-              </RadialGradient>
-            </Defs>
-            <Rect width="100%" height="100%" fill="url(#vignette)" />
-          </Svg>
+          <Vignette />
         </View>
 
         {/* The SVG includes its drop shadow, so it overflows the 166×84.375 logo slot. */}

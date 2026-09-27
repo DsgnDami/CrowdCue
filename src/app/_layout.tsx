@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors, fontSources } from '@/constants/theme';
+import { SessionProvider } from '@/context/session';
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts(fontSources);
@@ -10,7 +11,7 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) return null;
 
   return (
-    <>
+    <SessionProvider>
       <Stack
         screenOptions={{
           headerShown: false,
@@ -19,6 +20,6 @@ export default function RootLayout() {
         }}
       />
       <StatusBar style="light" />
-    </>
+    </SessionProvider>
   );
 }

@@ -18,6 +18,7 @@ import { ScreenHeader } from '@/components/screen-header';
 import { TextField } from '@/components/text-field';
 import { ToggleChip } from '@/components/toggle-chip';
 import { colors, fonts } from '@/constants/theme';
+import { useSession } from '@/context/session';
 
 const REQUEST_RULES = [
   { key: 'allowTips', label: 'Allow tips' },
@@ -41,11 +42,15 @@ export default function NewSession() {
     requireTip: false,
   });
   const venueRef = useRef<TextInput>(null);
+  const { startSession } = useSession();
 
   const toggleRule = (key: RuleKey) => setRules((r) => ({ ...r, [key]: !r[key] }));
 
-  // TODO: create the session and open the live/QR screen once it exists.
-  const handleGoLive = () => {};
+  // TODO: create the session on the backend; this starts a local one.
+  const handleGoLive = () => {
+    startSession({ eventName: eventName.trim() || 'Live session', venue: venue.trim(), rules });
+    goBack();
+  };
 
   return (
     <View style={styles.screen}>
