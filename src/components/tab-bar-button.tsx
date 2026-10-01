@@ -1,4 +1,5 @@
 import { Image, type ImageSource } from 'expo-image';
+import { router, type Href } from 'expo-router';
 import type { TabTriggerSlotProps } from 'expo-router/ui';
 import { forwardRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -11,13 +12,28 @@ type Props = TabTriggerSlotProps & {
 
 /** A button in the floating tab bar. The focused tab sits on a raised pill. */
 export const TabBarButton = forwardRef<View, Props>(function TabBarButton(
-  { icon, iconHeight = 24, label, isFocused, ...props },
+  { icon, iconHeight = 24, label, isFocused, href, onPress, ...props },
   ref,
 ) {
+  // Re-tapping the selected tab returns to its first screen, e.g. from the
+  // live dashboard back to Home. Otherwise switch tabs as usual.
+  const handlePress: typeof onPress = (event) => {
+    if (isFocused && href && router.canDismiss()) {
+      // On web the tab is a link; stop the browser following it.
+      event.preventDefault();
+      router.dismissTo(href as Href);
+      return;
+    }
+    onPress?.(event);
+  };
+
   return (
     <Pressable
       ref={ref}
       {...props}
+      // Not in RN's types; react-native-web renders the tab as a real link.
+      {...{ href }}
+      onPress={handlePress}
       role="tab"
       aria-label={label}
       aria-selected={!!isFocused}

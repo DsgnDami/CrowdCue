@@ -18,10 +18,18 @@ type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
 type PrimaryButtonProps = ButtonProps & {
   /** Optional leading icon, rendered 6pt before the label. */
   icon?: ReactNode;
+  /** Optional trailing icon, rendered 6pt after the label. */
+  trailingIcon?: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
-export function PrimaryButton({ label, icon, style, ...pressableProps }: PrimaryButtonProps) {
+export function PrimaryButton({
+  label,
+  icon,
+  trailingIcon,
+  style,
+  ...pressableProps
+}: PrimaryButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -30,6 +38,7 @@ export function PrimaryButton({ label, icon, style, ...pressableProps }: Primary
     >
       {icon}
       <Text style={styles.primaryLabel}>{label}</Text>
+      {trailingIcon}
     </Pressable>
   );
 }

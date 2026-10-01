@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
   Alert,
@@ -10,8 +11,9 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
+import { BottomFade } from '@/components/bottom-fade';
+import { EmptyRequests } from '@/components/live/empty-requests';
 import { LiveHeader } from '@/components/live/live-header';
 import { QrCard } from '@/components/live/qr-card';
 import { RequestCard } from '@/components/live/request-card';
@@ -84,9 +86,9 @@ export function LiveSession({ session }: { session: Session }) {
     setQuery('');
   };
 
-  // TODO: wire these up once the audience preview and full-screen QR are designed.
+  // TODO: wire up once the audience preview is designed.
   const handlePreview = () => {};
-  const handleEnlarge = () => {};
+  const handleEnlarge = () => router.push('/home/session-qr');
 
   return (
     <View style={styles.screen}>
@@ -106,7 +108,11 @@ export function LiveSession({ session }: { session: Session }) {
           startedAt={session.startedAt}
           onEnd={() => confirmEnd(endSession)}
         />
-        <QrCard onPreview={handlePreview} onEnlarge={handleEnlarge} />
+        <QrCard
+          joinLink={`https://${session.joinUrl}`}
+          onPreview={handlePreview}
+          onEnlarge={handleEnlarge}
+        />
       </Animated.View>
 
       {collapsedTop !== null && (
@@ -146,28 +152,20 @@ export function LiveSession({ session }: { session: Session }) {
                 />
               ))}
               {visible.length === 0 && (
-                <Text style={styles.empty}>
-                  {searching && query.trim()
-                    ? `No requests match “${query.trim()}”.`
-                    : 'No requests here yet.'}
-                </Text>
+                <EmptyRequests
+                  message={
+                    searching && query.trim()
+                      ? `No requests match “${query.trim()}”.`
+                      : 'Nothing here yet.'
+                  }
+                />
               )}
             </ScrollView>
           )}
         </RequestsSheet>
       )}
 
-      {/* Fades the list out behind the floating tab bar. Figma also blurs this
-          layer by 30pt, which React Native can't do without extra native code. */}
-      <Svg style={styles.fade} width="100%" height="108" pointerEvents="none">
-        <Defs>
-          <LinearGradient id="live-fade" x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0.0179" stopColor={colors.tileFill} stopOpacity={0} />
-            <Stop offset="0.40741" stopColor={colors.tileFill} stopOpacity={1} />
-          </LinearGradient>
-        </Defs>
-        <Rect width="100%" height="100%" fill="url(#live-fade)" />
-      </Svg>
+      <BottomFade />
     </View>
   );
 }
@@ -207,20 +205,9 @@ const styles = StyleSheet.create({
   // Cards are inset 20pt from the screen edge (minus the sheet border); the
   // bottom padding (set inline) keeps them clear of the floating tab bar.
   listContent: {
+    // Lets the empty state fill and centre itself in the list.
+    flexGrow: 1,
     paddingHorizontal: 19,
     gap: 4,
-  },
-  empty: {
-    paddingTop: 24,
-    fontFamily: fonts.medium,
-    fontSize: 14,
-    color: colors.textSubtle,
-    textAlign: 'center',
-  },
-  fade: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: -37,
   },
 });

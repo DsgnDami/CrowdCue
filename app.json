@@ -32,6 +32,13 @@
         {
           "photosPermission": "Allow CrowdCue to access your photos so you can set a profile image."
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow CrowdCue to access your photos so you can set a profile image.",
+          "savePhotosPermission": "Allow CrowdCue to save your session QR code to Photos."
+        }
       ]
     ],
     "scheme": "crowdcue",

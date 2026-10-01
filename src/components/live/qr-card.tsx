@@ -1,41 +1,31 @@
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { DjScenePhoto, DjTropicalPhoto } from '@/components/dj-photos';
 import { GlassCard } from '@/components/glass-card';
-import { SvgAsset } from '@/components/svg-asset';
-import { Vignette } from '@/components/vignette';
+import { JoinQrCode } from '@/components/join-qr-code';
 import { colors, fonts } from '@/constants/theme';
 
 type Props = {
+  /** Full join URL encoded in the QR. */
+  joinLink: string;
   onPreview: () => void;
   onEnlarge: () => void;
 };
 
-export function QrCard({ onPreview, onEnlarge }: Props) {
+export function QrCard({ joinLink, onPreview, onEnlarge }: Props) {
   return (
     <GlassCard style={styles.card}>
       {/* Faint DJ photos blended into the card. */}
-      <View style={styles.tropical} pointerEvents="none">
-        <Image
-          source={require('../../../assets/images/dj-tropical.png')}
-          style={StyleSheet.absoluteFill}
-          contentFit="cover"
-        />
-      </View>
+      <DjTropicalPhoto />
 
       <View style={styles.content}>
-        {/* TODO: generate the QR from the session's join URL; this is the
-            placeholder QR from the design. */}
         <Pressable
           onPress={onPreview}
           role="button"
           aria-label="Session QR code. Tap to preview the audience view"
         >
-          <SvgAsset
-            source={require('../../../assets/images/qr-placeholder.svg')}
-            width={60}
-            height={60}
-          />
+          <JoinQrCode value={joinLink} size={60} />
         </Pressable>
         <View style={styles.side}>
           <View style={styles.text}>
@@ -56,15 +46,7 @@ export function QrCard({ onPreview, onEnlarge }: Props) {
         </View>
       </View>
 
-      <View style={styles.scene} pointerEvents="none">
-        <Image
-          source={require('../../../assets/images/dj-performance.png')}
-          style={StyleSheet.absoluteFill}
-          contentFit="fill"
-          contentPosition="bottom"
-        />
-        <Vignette />
-      </View>
+      <DjScenePhoto />
     </GlassCard>
   );
 }
@@ -76,24 +58,6 @@ const styles = StyleSheet.create({
     height: 194,
     flexDirection: 'row',
     padding: 31,
-  },
-  tropical: {
-    position: 'absolute',
-    left: -11,
-    top: 95,
-    width: 193,
-    height: 129,
-    opacity: 0.1,
-    mixBlendMode: 'color-dodge',
-  },
-  scene: {
-    position: 'absolute',
-    left: 181,
-    top: -126,
-    width: 302,
-    height: 459,
-    opacity: 0.22,
-    mixBlendMode: 'color-dodge',
   },
   content: {
     flex: 1,
