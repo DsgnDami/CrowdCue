@@ -1,4 +1,5 @@
 import { useAssets } from 'expo-asset';
+import { View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
 export function SvgAsset({ source, width, height }: Props) {
   const [assets] = useAssets(source);
   const asset = assets?.[0];
-  if (!asset) return null;
+  // Reserve the space while loading so the layout doesn't shift.
+  if (!asset) return <View style={{ width, height }} />;
   return <SvgUri uri={asset.localUri ?? asset.uri} width={width} height={height} />;
 }
