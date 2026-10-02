@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors, fontSources } from '@/constants/theme';
+import { ProfileProvider } from '@/context/profile';
 import { SessionProvider } from '@/context/session';
 
 export default function RootLayout() {
@@ -11,15 +12,17 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) return null;
 
   return (
-    <SessionProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: colors.background },
-          animation: 'fade',
-        }}
-      />
-      <StatusBar style="light" />
-    </SessionProvider>
+    <ProfileProvider>
+      <SessionProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: colors.background },
+            animation: 'fade',
+          }}
+        />
+        <StatusBar style="light" />
+      </SessionProvider>
+    </ProfileProvider>
   );
 }

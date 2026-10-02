@@ -9,14 +9,15 @@ import { HomeHeader } from '@/components/home/home-header';
 import { LiveHeroCard, ReadyHeroCard } from '@/components/home/hero-cards';
 import { StatTile, statPalettes } from '@/components/home/stat-tile';
 import { colors, fonts } from '@/constants/theme';
+import { useProfile } from '@/context/profile';
 import { useSession } from '@/context/session';
 import { formatPounds, homeStats, previousSessions, upcomingEvents } from '@/data/home';
-import { djProfile } from '@/data/profile';
 
 // Figma frame: "iPhone 16 - 14" (node 260:226), 393×852.
 export default function Home() {
   const insets = useSafeAreaInsets();
   const { session } = useSession();
+  const { profile } = useProfile();
   const headerTop = Math.max(insets.top, 60);
 
   // TODO: wire up once notifications, the events list and analytics exist.
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <View style={styles.screen}>
       <View style={[styles.header, { paddingTop: headerTop }]}>
-        <HomeHeader name={djProfile.name} onNotifications={handleNotifications} />
+        <HomeHeader name={profile.name} onNotifications={handleNotifications} />
       </View>
 
       <ScrollView

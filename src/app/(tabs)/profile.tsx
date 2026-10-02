@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,18 +9,19 @@ import { EventCard } from '@/components/home/event-card';
 import { EditIcon, ImageIcon } from '@/components/icons';
 import { SvgAsset } from '@/components/svg-asset';
 import { colors, fonts } from '@/constants/theme';
+import { useProfile } from '@/context/profile';
 import { useSession } from '@/context/session';
 import { upcomingEvents } from '@/data/home';
-import { djProfile } from '@/data/profile';
 import { confirmAction } from '@/lib/confirm';
 
 // Figma frame: "iPhone 16 - 18" (node 300:7405), 393×852.
 export default function Profile() {
   const insets = useSafeAreaInsets();
   const { session, endSession } = useSession();
+  const { profile } = useProfile();
 
-  // TODO: wire up once editing a profile and adding events are designed.
-  const handleEdit = () => {};
+  const handleEdit = () => router.push('/edit-profile');
+  // TODO: wire up once adding events is designed.
   const handleAddEvent = () => {};
 
   // TODO: sign out with the auth provider once there is one.
@@ -60,13 +62,21 @@ export default function Profile() {
           <View style={styles.identity}>
             <View style={styles.avatar}>
               <ImageIcon size={64} />
+              {profile.avatarUri && (
+                <Image
+                  source={{ uri: profile.avatarUri }}
+                  style={StyleSheet.absoluteFill}
+                  contentFit="cover"
+                  accessibilityLabel="Profile photo"
+                />
+              )}
             </View>
             <View style={styles.names}>
-              <Text style={styles.name}>{djProfile.name}</Text>
-              <Text style={styles.handle}>{djProfile.handle}</Text>
+              <Text style={styles.name}>{profile.name}</Text>
+              <Text style={styles.handle}>{profile.handle}</Text>
             </View>
           </View>
-          <Text style={styles.bio}>{djProfile.bio}</Text>
+          <Text style={styles.bio}>{profile.bio}</Text>
         </View>
 
         <View style={styles.panel}>
@@ -157,6 +167,7 @@ const styles = StyleSheet.create({
   // Figma: 28.571pt padding, minus the 2pt border.
   avatar: {
     padding: 26.571,
+    overflow: 'hidden',
     borderRadius: 40,
     borderWidth: 2,
     borderColor: colors.tileBorder,
