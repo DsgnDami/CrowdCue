@@ -1,8 +1,6 @@
 // TODO: replace with the signed-in DJ's real profile, stats and events once
 // there's a backend. These match the Figma home page (node 260:226).
 
-export const DJ_NAME = 'DJ Propane';
-
 export const homeStats = {
   requests: 37,
   tipsThisWeek: 248.5,

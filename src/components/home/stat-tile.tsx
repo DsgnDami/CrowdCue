@@ -3,11 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { fonts } from '@/constants/theme';
 
+// Note: no key is called `value`. Reanimated's Babel plugin treats any
+// `x.value` in an inline style as a shared value and adds a runtime check
+// that crashes in Expo Go.
 export type StatPalette = {
   border: string;
   fill: string;
   glow: string;
-  value: string;
+  /** Colour of the big number. */
+  number: string;
   label: string;
 };
 
@@ -17,21 +21,21 @@ export const statPalettes = {
     border: '#011858',
     fill: 'rgba(0, 8, 30, 0.43)',
     glow: 'rgba(2, 36, 128, 0.41)',
-    value: '#7a98f6',
+    number: '#7a98f6',
     label: '#5976d2',
   },
   pink: {
     border: '#340036',
     fill: 'rgba(30, 0, 31, 0.38)',
     glow: 'rgba(69, 0, 71, 0.5)',
-    value: '#e761ec',
+    number: '#e761ec',
     label: '#c76bca',
   },
   purple: {
     border: '#2a0153',
     fill: 'rgba(30, 2, 58, 0.19)',
     glow: 'rgba(62, 1, 122, 0.41)',
-    value: '#a552f6',
+    number: '#a552f6',
     label: '#a062dd',
   },
 } satisfies Record<string, StatPalette>;
@@ -59,7 +63,7 @@ export function StatTile({ icon, value, label, palette }: Props) {
     >
       <Image source={icon} style={styles.icon} />
       <View style={styles.text}>
-        <Text style={[styles.value, { color: palette.value }]}>{value}</Text>
+        <Text style={[styles.value, { color: palette.number }]}>{value}</Text>
         <Text style={[styles.label, { color: palette.label }]}>{label}</Text>
       </View>
     </View>

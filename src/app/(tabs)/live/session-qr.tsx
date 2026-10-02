@@ -14,7 +14,7 @@ import { useSession } from '@/context/session';
 import { saveQrPng } from '@/lib/save-qr-png';
 import { startScreenMirroring } from '@/lib/start-screen-mirroring';
 
-const goBack = () => (router.canGoBack() ? router.back() : router.replace('/home'));
+const goBack = () => (router.canGoBack() ? router.back() : router.replace('/live'));
 const showPreview = () => router.push('/present');
 
 // nativeID of the QR wrapper, used to find the rendered <svg> on web.
@@ -37,7 +37,7 @@ export default function SessionQr() {
   }, [flash]);
 
   // Only reachable while live; e.g. a reload drops the in-memory session.
-  if (!session) return <Redirect href="/home" />;
+  if (!session) return <Redirect href="/live" />;
 
   const link = `https://${session.joinUrl}`;
   const code = session.joinUrl.split('/').pop() ?? 'session';

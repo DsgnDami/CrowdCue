@@ -10,7 +10,8 @@ import { LiveHeroCard, ReadyHeroCard } from '@/components/home/hero-cards';
 import { StatTile, statPalettes } from '@/components/home/stat-tile';
 import { colors, fonts } from '@/constants/theme';
 import { useSession } from '@/context/session';
-import { DJ_NAME, formatPounds, homeStats, previousSessions, upcomingEvents } from '@/data/home';
+import { formatPounds, homeStats, previousSessions, upcomingEvents } from '@/data/home';
+import { djProfile } from '@/data/profile';
 
 // Figma frame: "iPhone 16 - 14" (node 260:226), 393×852.
 export default function Home() {
@@ -26,7 +27,7 @@ export default function Home() {
   return (
     <View style={styles.screen}>
       <View style={[styles.header, { paddingTop: headerTop }]}>
-        <HomeHeader name={DJ_NAME} onNotifications={handleNotifications} />
+        <HomeHeader name={djProfile.name} onNotifications={handleNotifications} />
       </View>
 
       <ScrollView
@@ -47,7 +48,7 @@ export default function Home() {
         </View>
 
         {session ? (
-          <LiveHeroCard onOpen={() => router.push('/home/session')} />
+          <LiveHeroCard onOpen={() => router.navigate('/live')} />
         ) : (
           <ReadyHeroCard onStart={() => router.push('/new-session')} />
         )}

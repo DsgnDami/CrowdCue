@@ -49,9 +49,9 @@ export default function NewSession() {
   // TODO: create the session on the backend; this starts a local one.
   const handleGoLive = () => {
     startSession({ eventName: eventName.trim() || 'Live session', venue: venue.trim(), rules });
-    // Back to Home, then straight into the live dashboard.
+    // Close this form and switch to the Live tab's dashboard.
     goBack();
-    router.push('/home/session');
+    router.navigate('/live');
   };
 
   return (

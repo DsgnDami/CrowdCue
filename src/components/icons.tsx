@@ -129,3 +129,23 @@ export const VenueIcon = () => (
     ]}
   />
 );
+
+export const EditIcon = () => (
+  <LayeredIcon
+    size={24}
+    layers={[
+      {
+        source: require('../../assets/images/icon-edit-pencil.png'),
+        inset: ['16.67%', '25%', '20.83%', '12.5%'],
+      },
+      {
+        source: require('../../assets/images/icon-edit-tip.png'),
+        inset: ['4.17%', '12.5%', '66.67%', '58.33%'],
+      },
+      {
+        source: require('../../assets/images/icon-edit-line.svg'),
+        inset: ['87.5%', '8.33%', '4.17%', '8.33%'],
+      },
+    ]}
+  />
+);

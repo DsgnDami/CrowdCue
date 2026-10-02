@@ -14,7 +14,7 @@ import { useSession } from '@/context/session';
 const FRAME_WIDTH = 393;
 const FRAME_HEIGHT = 852;
 
-const exit = () => (router.canGoBack() ? router.back() : router.replace('/home/session-qr'));
+const exit = () => (router.canGoBack() ? router.back() : router.replace('/live/session-qr'));
 
 /**
  * Full-screen QR for projectors, TVs and venue screens. The design is laid out
@@ -35,7 +35,7 @@ export default function Present() {
   const { width, height } = useWindowDimensions();
   const scale = Math.min(width / FRAME_WIDTH, height / FRAME_HEIGHT);
 
-  if (!session) return <Redirect href="/home" />;
+  if (!session) return <Redirect href="/live" />;
 
   return (
     <Pressable

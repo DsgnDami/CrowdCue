@@ -12,17 +12,23 @@ export default function TabsLayout() {
         <TabTrigger name="home" href="/home" asChild>
           <TabBarButton
             label="Home"
-            icon={require('../../../assets/images/tab-home.svg')}
+            activeIcon={require('../../../assets/images/tab-home-active.svg')}
+            icon={require('../../../assets/images/tab-home-inactive.svg')}
             iconHeight={24.5}
           />
         </TabTrigger>
         <TabTrigger name="live" href="/live" asChild>
-          <TabBarButton label="Live" icon={require('../../../assets/images/tab-live.svg')} />
+          <TabBarButton
+            label="Live"
+            activeIcon={require('../../../assets/images/tab-live-active.svg')}
+            icon={require('../../../assets/images/tab-live-inactive.svg')}
+          />
         </TabTrigger>
         <TabTrigger name="profile" href="/profile" asChild>
           <TabBarButton
             label="Profile"
-            icon={require('../../../assets/images/tab-profile.svg')}
+            activeIcon={require('../../../assets/images/tab-profile-active.svg')}
+            icon={require('../../../assets/images/tab-profile-inactive.svg')}
             iconHeight={24.5}
           />
         </TabTrigger>

@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
     fontSize: 24,
     letterSpacing: 0.72,
-    color: badge.value,
+    color: badge.number,
     textAlign: 'center',
   },
   month: {
     fontFamily: fonts.medium,
     fontSize: 12,
-    color: badge.value,
+    color: badge.number,
     textAlign: 'center',
   },
   text: {

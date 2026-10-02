@@ -14,6 +14,7 @@ export const colors = {
 // Keys must match the names registered with useFonts in src/app/_layout.tsx.
 export const fonts = {
   display: 'BehindTheNineties-Regular',
+  displayMedium: 'BehindTheNineties-Medium',
   regular: 'SFProRounded-Regular',
   medium: 'SFProRounded-Medium',
   semibold: 'SFProRounded-Semibold',
@@ -21,6 +22,7 @@ export const fonts = {
 
 export const fontSources = {
   [fonts.display]: require('../../assets/fonts/Behind-The-Nineties-Rg.otf'),
+  [fonts.displayMedium]: require('../../assets/fonts/Behind-The-Nineties-Md.otf'),
   [fonts.regular]: require('../../assets/fonts/SF-Pro-Rounded-Regular.otf'),
   [fonts.medium]: require('../../assets/fonts/SF-Pro-Rounded-Medium.otf'),
   [fonts.semibold]: require('../../assets/fonts/SF-Pro-Rounded-Semibold.otf'),

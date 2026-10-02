@@ -1,10 +1,8 @@
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
-  Alert,
   Animated,
   Keyboard,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,6 +20,7 @@ import { RequestSearchBar } from '@/components/live/request-search-bar';
 import { RequestsSheet, type RequestsSheetHandle } from '@/components/live/requests-sheet';
 import { colors, fonts } from '@/constants/theme';
 import { useSession, type LiveSession as Session, type SongRequest } from '@/context/session';
+import { confirmAction } from '@/lib/confirm';
 
 function matchesQuery(request: SongRequest, query: string) {
   const q = query.trim().toLowerCase();
@@ -29,20 +28,6 @@ function matchesQuery(request: SongRequest, query: string) {
   return [request.title, request.artist, request.requester, request.message ?? ''].some((field) =>
     field.toLowerCase().includes(q),
   );
-}
-
-function confirmEnd(onConfirm: () => void) {
-  const title = 'End session?';
-  const body = 'The QR code will stop taking requests.';
-  // Alert.alert is a no-op on web.
-  if (Platform.OS === 'web') {
-    if (window.confirm(`${title}\n${body}`)) onConfirm();
-    return;
-  }
-  Alert.alert(title, body, [
-    { text: 'Cancel', style: 'cancel' },
-    { text: 'End session', style: 'destructive', onPress: onConfirm },
-  ]);
 }
 
 // Figma frames: "iPhone 16 - 12" (node 170:1917) with the requests sheet
@@ -88,7 +73,7 @@ export function LiveSession({ session }: { session: Session }) {
 
   // TODO: wire up once the audience preview is designed.
   const handlePreview = () => {};
-  const handleEnlarge = () => router.push('/home/session-qr');
+  const handleEnlarge = () => router.push('/live/session-qr');
 
   return (
     <View style={styles.screen}>
@@ -106,7 +91,14 @@ export function LiveSession({ session }: { session: Session }) {
           eventName={session.eventName}
           joinUrl={session.joinUrl}
           startedAt={session.startedAt}
-          onEnd={() => confirmEnd(endSession)}
+          onEnd={() =>
+            confirmAction(
+              'End session?',
+              'The QR code will stop taking requests.',
+              'End session',
+              endSession,
+            )
+          }
         />
         <QrCard
           joinLink={`https://${session.joinUrl}`}
